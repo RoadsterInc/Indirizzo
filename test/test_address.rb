@@ -146,6 +146,29 @@ class TestAddress < Test::Unit::TestCase
     end
   end
 
+  def test_street_sufix
+    fixtures = [
+      [ "1600", nil ],
+      [ "1600 Pennsylvania", nil ],
+      [ "1600 South Pennsylvania", nil ],
+      [ "1600 Pennsylvania Av", "Av" ],
+      [ "1600 Pennsylvania Aven", "Aven" ],
+      [ "1600 Pennsylvania Avenu", "Avenu" ],
+      [ "1600 Pennsylvania Avenue", "Avenue" ],
+      [ "1600 Pennsylvania Ave", "Ave" ],
+    ]
+    fixtures.each do |fixture|
+      addr = Address.new({street: fixture[0]})
+      assert_equal fixture[1], addr.street_suffix
+    end
+
+    addr = Address.new({ street: '1600 North Pennsylvania Av' })
+    assert_equal 'Av', addr.street_suffix
+    assert_equal '1600', addr.number
+    assert_equal 'North Pennsylvania Av', addr.street.first
+    assert_equal 'Pennsylvania', addr.street_parts.first
+  end
+
   def check_city(fixture)
       addr  = Address.new(fixture[0])
       [:city, :state, :zip].zip(fixture[1..3]).each do |key,val|

@@ -236,6 +236,15 @@ module Indirizzo
       strings.uniq
     end
 
+    def street_suffix
+      return nil if @street.nil? || @street.empty?
+      if (matched = @street.first&.match(Regexp.new("\s*" + Suffix_Type.regexp.source + "$", Regexp::IGNORECASE)))
+        matched[0]&.strip
+      else
+        nil
+      end
+    end
+
     def remove_noise_words(strings)
       # Don't return strings that consist solely of abbreviations.
       # NOTE: Is this a micro-optimization that has edge cases that will break?
