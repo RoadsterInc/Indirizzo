@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
-  s.name = %q{Indirizzo}
-  s.version = "0.1.7"
+  s.name = %q{indirizzo}
+  s.version = "0.1.8"
 
   s.authors = [%q{Dave Worth}]
-  s.date = %q{2012-01-29}
+  s.date = %q{2021-01-27}
   s.description = %q{Indirizzo is simply an extraction of the US Street Address parsing code from Geocoder::US}
   s.email = %q{dave@highgroove.com}
 
@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
     "README.md"
   ]
 
-  s.add_development_dependency('rake')
   s.add_development_dependency('cover_me')
   s.add_development_dependency('awesome_print')
 end

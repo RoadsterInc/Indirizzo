@@ -2,6 +2,6 @@ coverage/
 coverage.data
 *.gem
 .bundle
-Gemfile.lock
 pkg/*
 .rvmrc
+.idea/*

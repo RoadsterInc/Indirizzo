@@ -86,7 +86,7 @@ class TestAddress < Test::Unit::TestCase
       {:address => "Arlington, VA", :place_check => ["Arlington"]}
       ]
       for preparsed_address in addresses
-        address_for_geocode = Address.new preparsed_address 
+        address_for_geocode = Address.new preparsed_address
         assert_equal preparsed_address[:place_check],address_for_geocode.city
       end
   end
@@ -288,8 +288,8 @@ class TestAddress < Test::Unit::TestCase
      :city   => "Hometown",
      :zip    => "12345",
      :country => "US"}
-  ].each do |fixture|
-    define_method "test_parse_#{fixture[:text].gsub(/(?:\s+|[.,])/,'_')}" do
+  ].each do |fixture, index|
+    define_method "test_parse_address_#{index}" do
       pend if fixture[:pending]
       check_addr(fixture)
     end

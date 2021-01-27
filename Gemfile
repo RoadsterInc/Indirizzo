@@ -1,9 +1,6 @@
-source :rubygems
-
-gem 'rake'
+source 'https://rubygems.org'
 
 group :test, :development do
-  gem 'cover_me'
   gem 'awesome_print'
 end
 
