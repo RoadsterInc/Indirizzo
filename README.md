@@ -4,8 +4,6 @@ Indirizzo is a simple extraction of the Address class (along with the numbers
 and constants handling code) from [Geocommons](http://geocommons.com/)'
 [Geocoder::US 2.0](https://github.com/geocommons/geocoder) gem.
 
-[![Build Status](https://secure.travis-ci.org/daveworth/Indirizzo.png)](http://travis-ci.org/daveworth/Indirizzo)
-
 ## What this fork adds
 This fork of the original code adds the ability to get the street suffix/type, e.g. Rd, St, Ave, etc. and prepare
 for supporting Canada address parsing.
