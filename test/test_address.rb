@@ -169,6 +169,42 @@ class TestAddress < Test::Unit::TestCase
     assert_equal 'Pennsylvania', addr.street_parts.first
   end
 
+  def test_parse_address
+    # '45 Yukon Street, Montague PE C0A 5E4 CA'
+    ca_address = {
+      street: '45 Yukon Street',
+      city: 'Montague',
+      state: 'PE',
+      postal_code: 'C0A 5E4',
+      country: 'CA'
+    }
+
+    # '1600 Pennsylvania Ave, Washington, DC, 20500 US'
+    us_address = {
+      street: '1600 Pennsylvania Ave',
+      city: 'Washington',
+      state: 'DC',
+      postal_code: '20500',
+      country: 'US'
+    }
+
+    result = Address.new(ca_address)
+    assert_equal '45', result.number, 'should match number'
+    assert_equal 'Yukon Street', result.street.first, 'should match street'
+    assert_equal 'Montague', result.city.first, 'should match city'
+    assert_equal 'PE', result.state, 'should match state'
+    assert_equal 'C0A 5E4', result.zip, 'should match zip'
+    assert_equal 'Yukon', result.street_parts.join(' '), 'should match street name'
+
+    result = Address.new(us_address)
+    assert_equal '1600', result.number, 'should match number'
+    assert_equal 'Pennsylvania Ave', result.street.first, 'should match street'
+    assert_equal 'Washington', result.city.first, 'should match city'
+    assert_equal 'DC', result.state, 'should match state'
+    assert_equal '20500', result.zip, 'should match zip'
+    assert_equal 'Pennsylvania', result.street_parts.join(''), 'should match street name'
+  end
+
   def check_city(fixture)
       addr  = Address.new(fixture[0])
       [:city, :state, :zip].zip(fixture[1..3]).each do |key,val|

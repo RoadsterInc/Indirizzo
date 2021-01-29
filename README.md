@@ -6,6 +6,10 @@ and constants handling code) from [Geocommons](http://geocommons.com/)'
 
 [![Build Status](https://secure.travis-ci.org/daveworth/Indirizzo.png)](http://travis-ci.org/daveworth/Indirizzo)
 
+## What this fork adds
+This fork of the original code adds the ability to get the street suffix/type, e.g. Rd, St, Ave, etc. and prepare
+for supporting Canada address parsing.
+
 ## Background
 
 My motivation for creating this extraction is the dearth of high-quality,
