@@ -188,7 +188,7 @@ class TestAddress < Test::Unit::TestCase
       country: 'US'
     }
 
-    result = Address.new(ca_address)
+    result = Address.new(ca_address, :expand_streets => false)
     assert_equal '45', result.number, 'should match number'
     assert_equal 'Yukon Street', result.street.first, 'should match street'
     assert_equal 'Montague', result.city.first, 'should match city'
@@ -196,7 +196,7 @@ class TestAddress < Test::Unit::TestCase
     assert_equal 'C0A 5E4', result.zip, 'should match zip'
     assert_equal 'Yukon', result.street_parts.join(' '), 'should match street name'
 
-    result = Address.new(us_address)
+    result = Address.new(us_address, :expand_streets => false)
     assert_equal '1600', result.number, 'should match number'
     assert_equal 'Pennsylvania Ave', result.street.first, 'should match street'
     assert_equal 'Washington', result.city.first, 'should match city'
@@ -204,6 +204,49 @@ class TestAddress < Test::Unit::TestCase
     assert_equal '20500', result.zip, 'should match zip'
     assert_equal 'Pennsylvania', result.street_parts.join(''), 'should match street name'
   end
+
+  def test_canada
+    canadian_addresses = [
+      '7333 37 AV NW',
+      '7440 OLD BANFF COACH RD SW',
+      '2211 13 ST NW',
+      '7726 46 AV NW',
+      '1403 22 AV NW',
+      '71 COULEE WY SW',
+      '2437 29 AV SW',
+      '7728 46 AV NW',
+      '2435 29 AV SW',
+      '108 38A AV SW',
+      '3513 40 ST SW',
+      '7838 8A AV SW',
+      '1709 BOWNESS RD NW',
+      # https://www.gimme-shelter.com/steet-types-designations-abbreviations-50006/
+      # '8 BERKLEY GA NW', # need to add Gate/GA to suffixes
+      '1921 128 AV NE',
+      '12450 15 ST NE',
+      # '128 MACEWAN PARK RI NW', # need to add Rise/RI to suffixes
+      '8700 23 AV SE',
+      '103 WHITEWOOD PL NE',
+      '103 38 AV SW',
+      '1765 7 AV NW'
+    ]
+    canadian_addresses.each do |ad|
+      result = Address.new({street: ad}, :expand_streets => false)
+      puts result.street_suffix
+      assert_not_nil result.street_suffix, "#{ad} should have a street suffix"
+      assert_not_empty result.number
+    end
+  end
+
+  # def test_parse_address_ca_failures
+  #   # todo fix this failing test, Ste. gets expanded to Saint and thinks that is two street parts
+  #   failing_ca_street = {
+  #     street: '4972 Ste. Catherine Ouest'
+  #   }
+  #
+  #   result = Address.new(failing_ca_street, :expand_streets => false)
+  #   assert_equal '4972', result.number, 'should match number'
+  # end
 
   def check_city(fixture)
       addr  = Address.new(fixture[0])
