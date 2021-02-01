@@ -102,14 +102,15 @@ class TestAddress < Test::Unit::TestCase
   end
 
   def test_country_parse
-    addresses = [
-      {:city => "Paris", :country => "FR"},
-      ]
+    result = Address.new({:country => 'US', :expand_streets => false})
+    assert_equal 'US', result.country, 'should match country'
 
-      for preparsed_address in addresses
-        address_for_geocode = Address.new preparsed_address
-        assert_equal preparsed_address[:country],address_for_geocode.state
-      end
+    result = Address.new({:country => 'us', :expand_streets => false})
+    assert_equal 'us', result.country, 'should match country lowercase'
+
+    assert_raise do
+      Address.new({:country => 'CA', :expand_streets => false})
+    end
   end
 
   # test cleaning code
@@ -175,8 +176,7 @@ class TestAddress < Test::Unit::TestCase
       street: '45 Yukon Street',
       city: 'Montague',
       state: 'PE',
-      postal_code: 'C0A 5E4',
-      country: 'CA'
+      postal_code: 'C0A 5E4'
     }
 
     # '1600 Pennsylvania Ave, Washington, DC, 20500 US'
@@ -232,7 +232,6 @@ class TestAddress < Test::Unit::TestCase
     ]
     canadian_addresses.each do |ad|
       result = Address.new({street: ad}, :expand_streets => false)
-      puts result.street_suffix
       assert_not_nil result.street_suffix, "#{ad} should have a street suffix"
       assert_not_empty result.number
     end

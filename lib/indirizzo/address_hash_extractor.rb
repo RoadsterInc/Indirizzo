@@ -27,6 +27,7 @@ module Indirizzo
       handle_city
       handle_state
       handle_zip
+      handle_country
     end
 
     def handle_street_and_numbers
@@ -68,8 +69,6 @@ module Indirizzo
         @state = State[@state] if @state.length > 2
       elsif !address_hash[:state].nil?
         @state = address_hash[:state]
-      elsif !address_hash[:country].nil?
-        @state = address_hash[:country]
       end
     end
 
@@ -78,6 +77,15 @@ module Indirizzo
       @plus4 = address_hash[:plus4]
       if !@zip
         @zip = @plus4 = ""
+      end
+    end
+
+    def handle_country
+      @country = address_hash[:country]
+      unless @country.nil?
+        unless ['US'].include?(@country.upcase)
+          raise ArgumentError, "#{@country} is not a supported country."
+        end
       end
     end
   end
