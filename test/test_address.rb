@@ -147,7 +147,7 @@ class TestAddress < Test::Unit::TestCase
     end
   end
 
-  def test_street_sufix
+  def test_street_suffix
     fixtures = [
       [ "1600", nil ],
       [ "1600 Pennsylvania", nil ],
@@ -156,7 +156,7 @@ class TestAddress < Test::Unit::TestCase
       [ "1600 Pennsylvania Aven", "Aven" ],
       [ "1600 Pennsylvania Avenu", "Avenu" ],
       [ "1600 Pennsylvania Avenue", "Avenue" ],
-      [ "1600 Pennsylvania Ave", "Ave" ],
+      [ "1600 Pennsylvania Ave.", "Ave" ],
     ]
     fixtures.each do |fixture|
       addr = Address.new({street: fixture[0]})

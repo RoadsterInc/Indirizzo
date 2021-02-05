@@ -64,7 +64,9 @@ module Indirizzo
       sufdxn = Regexp.new("\s*" + Directional.regexp.source + "$", Regexp::IGNORECASE)
       street_no_directional = @street.first.gsub(sufdxn, "")
       if (matched = street_no_directional.match(Regexp.new("\s*" + Suffix_Type.regexp.source + "$", Regexp::IGNORECASE)))
-        matched[0]&.strip
+        if matched[0]
+          Helper.clean matched[0]
+        end
       else
         nil
       end
